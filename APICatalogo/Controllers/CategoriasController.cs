@@ -27,7 +27,7 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                //throw new DataMisalignedException();
+                //throw new DataMisalignedException(); // para simular erro
                 return _context.Categorias.AsNoTracking().ToList(); // AsNoTracking() permite o não rastreio da solicitação, melhorando o desempenho, mas deve ser usada apenas quando o retorno da solicitação não for alterada, por exemplo, em ações GET
 
             }
