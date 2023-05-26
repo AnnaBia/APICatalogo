@@ -19,18 +19,13 @@ namespace APICatalogo.Controllers
         [HttpGet("produtos")]
         public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
         {
-            return _context.Categorias.Include(p => p.Produtos).ToList();
+            return _context.Categorias.Include(p => p.Produtos).AsNoTracking().ToList();
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            var categorias = _context.Categorias.ToList();
-            if (categorias is null)
-            {
-                return NotFound("Categorias não encotradas.");
-            }
-            return categorias;
+            return _context.Categorias.AsNoTracking().ToList(); // AsNoTracking() permite o não rastreio da solicitação, melhorando o desempenho, mas deve ser usada apenas quando o retorno da solicitação não for alterada, por exemplo, em ações GET
         }
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
@@ -61,7 +56,7 @@ namespace APICatalogo.Controllers
         [HttpPut("{id:int}")]
         public ActionResult Put(int id, Categoria categoria)
         {
-            if(id != categoria.CategoriaId)
+            if (id != categoria.CategoriaId)
             {
                 return BadRequest();
             }
@@ -76,7 +71,7 @@ namespace APICatalogo.Controllers
         public ActionResult Delete(int id)
         {
             var categoria = _context.Categorias.FirstOrDefault(c => c.CategoriaId == id);
-            if(categoria is null)
+            if (categoria is null)
             {
                 return NotFound("Categoria não localizada.");
             }

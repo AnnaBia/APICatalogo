@@ -22,7 +22,7 @@ namespace APICatalogo.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get() // Por que IEnumerable ao invés de List<> ? Interface de leitura, permite adiar a execução, é otimizado
         {
-            var produtos = _context.Produtos.ToList(); // _context permite acessar a base de dados da tabela Produtos, ToList() retorna a lista
+            var produtos = _context.Produtos.AsNoTracking().ToList(); // _context permite acessar a base de dados da tabela Produtos, ToList() retorna a lista
             if (produtos is null) // se não houver produtos retorne um erro
             {
                 return NotFound("Produtos não encontrados."); // NotFound() vem da classe abstrata ControllerBase
