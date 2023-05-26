@@ -25,7 +25,15 @@ namespace APICatalogo.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            return _context.Categorias.AsNoTracking().ToList(); // AsNoTracking() permite o não rastreio da solicitação, melhorando o desempenho, mas deve ser usada apenas quando o retorno da solicitação não for alterada, por exemplo, em ações GET
+            try
+            {
+                //throw new DataMisalignedException();
+                return _context.Categorias.AsNoTracking().ToList(); // AsNoTracking() permite o não rastreio da solicitação, melhorando o desempenho, mas deve ser usada apenas quando o retorno da solicitação não for alterada, por exemplo, em ações GET
+
+            }
+            catch (Exception) {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro no servidor.");
+            }
         }
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
