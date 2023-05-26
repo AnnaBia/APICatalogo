@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace APICatalogo.Models
 {
@@ -30,6 +31,8 @@ namespace APICatalogo.Models
         public DateTime DataCadastro { get; set; }
 
         public int CategoriaId { get; set; } // mapeia a coluna categoriaId - FK
+
+        [JsonIgnore] // remove do objeto propriedades desnecessárias
         public Categoria? Categoria { get; set; } // propriedade de navegação, ou seja, um produto está relacionado a uma categoria
     }
 }
